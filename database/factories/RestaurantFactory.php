@@ -17,9 +17,9 @@ class RestaurantFactory extends Factory
     public function definition(): array
     {
         return [
-            "id" -> $this -> faker -> uuid(),
-            "name" -> $this -> faker -> company(),
-            "rating" -> $this -> faker -> numberBetween(0, 5)
+            "id" => $this -> faker -> uuid(),
+            "name" => $this -> faker -> company(),
+            "rating" => $this -> faker -> numberBetween(0, 5)
         ];
     }
 }
