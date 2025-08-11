@@ -58,9 +58,9 @@
 
 - Add valid structure for the factory:
 ```
-    "id" -> $this -> faker -> uuid(),
-    "name" -> $this -> faker -> company(),
-    "rating" -> $this -> faker -> numberBetween(0, 5)
+    "id" => $this -> faker -> uuid(),
+    "name" => $this -> faker -> company(),
+    "rating" => $this -> faker -> numberBetween(0, 5)
 ```
 
 # 7. Creating seeder for Restaurant
@@ -85,3 +85,46 @@
         ]);
     }
 ```
+
+# 8. Executing migrations
+- From herd terminal execute: `herd php artisan migrate --seed`
+
+# 9. Create controller
+- From herd terminal execute: `herd php artisan make:controller RestaurantController`
+
+1. Inport models to the Controller:
+```
+    use App\Models\Booking;
+    use App\Models\Restaurant;
+```
+
+2. Define 3 functions in the controller:
+```
+    public function getAllRestaurants() {
+        return [ "data" => Restaurant::all() ];
+    }
+
+    public function getBookings(Restaurant $restaurant) {
+        return [ "data" => $restaurant -> bookings ];
+    }
+
+    public function addBooking(Request $request) {
+        $booking = new Booking($request -> all());
+
+        $booking -> save();
+
+        return $booking;
+    }
+```
+
+# 10. Link Api routes to the controller
+1. Add import of the Restaurant Controller: `use App\Http\Controllers\RestaurantController;`
+
+2. Add 3 routes:
+```
+    Route::get("/restaurants", [RestaurantController::class, "getRestaurants"]);
+    Route::get("/restaurants/{restaurant}/bookings", [RestaurantController::class, "getBookings"]);
+    Route::post("/bookings", [RestaurantController::class, "addBooking"]);
+```
+
+# 11. And now is the best time to test the server-side using postman and fix the issues!
