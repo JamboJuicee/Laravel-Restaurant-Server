@@ -25,3 +25,30 @@
     $table->foreignUuid("restaurant_id") -> constrained();
     $table->timestamps();
 ```
+
+## 4. Create models
+1. `herd php artisan make:model Restaurant`
+2. `herd php artisan make:model Booking`
+
+- Make sure to add `use Illuminate\Database\Eloquent\HasUuids;` for both Models.
+- Make sure to add `use Illuminate\Database\Eloquent\Factories\HasFactory;` for Restaurant model
+
+# 5. Add valid structure for models
+1. Restaurant:
+```
+    use HasFactory, HasUuids;
+
+    public function bookings() {
+        return $this -> hasMany(Booking::class);
+    }
+```
+2. Structure for bookings:
+```
+    use hasUuids;
+
+    protected $fillable = ["name", "email", "datetime", "people", "restaurant_id"];
+
+    public function restaurant() {
+        return $this -> belongsTo(Restaurant::class);
+    }
+```
