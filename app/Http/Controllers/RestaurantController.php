@@ -9,19 +9,18 @@ use Illuminate\Http\Request;
 class RestaurantController extends Controller
 {
     public function getAllRestaurants() {
-        return [ "data" => Restaurant::all() ];
+        return Restaurant::all();
     }
 
     public function getBookings(Restaurant $restaurant) {
-        return [ "data" => $restaurant -> bookings ];
+        return $restaurant->bookings;
     }
 
     public function addBooking(Request $request) {
-        $booking = new Booking($request -> all());
-
-        $booking -> save();
+        $booking = new Booking($request->all());
+        $booking->save();
         
-        return $booking;
+        return response()->json($booking, 201);
     }
 
 }
