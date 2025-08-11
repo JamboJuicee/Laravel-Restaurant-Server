@@ -33,7 +33,7 @@
 - Make sure to add `use Illuminate\Database\Eloquent\Concerns\HasUuids;` for both Models.
 - Make sure to add `use Illuminate\Database\Eloquent\Factories\HasFactory;` for Restaurant model
 
-# 5. Add valid structure for models
+## 5. Add valid structure for models
 1. Restaurant:
 ```
     use HasFactory, HasUuids;
@@ -53,7 +53,7 @@
     }
 ```
 
-# 6. Create Restaurant Factory & add valid structure for it
+## 6. Create Restaurant Factory & add valid structure for it
 1. `herd php artisan make:factory RestaurantFactory`
 
 - Add valid structure for the factory:
@@ -63,7 +63,7 @@
     "rating" => $this -> faker -> numberBetween(0, 5)
 ```
 
-# 7. Creating seeder for Restaurant
+## 7. Creating seeder for Restaurant
 1. `herd php artisan make:seeder RestaurantSeeder`
 
 - Import Restaurant model to the seeder: `use App\Models\Restaurant;`
@@ -86,10 +86,10 @@
     }
 ```
 
-# 8. Executing migrations
+## 8. Executing migrations
 - From herd terminal execute: `herd php artisan migrate --seed`
 
-# 9. Create controller
+## 9. Create controller
 - From herd terminal execute: `herd php artisan make:controller RestaurantController`
 
 1. Inport models to the Controller:
@@ -99,6 +99,11 @@
 ```
 
 2. Define 3 functions in the controller:
+
+### 🚨 IMPORTANT! 🚨
+- **The structure below is incorrect!, be careful not to use it anywhere**
+- *This structure does not return objects in JSON, which causes some errors*
+
 ```
     public function getAllRestaurants() {
         return [ "data" => Restaurant::all() ];
@@ -117,7 +122,29 @@
     }
 ```
 
-# 10. Link Api routes to the controller
+- *The correct structure is this:*
+
+```
+    public function getAllRestaurants() {
+        return Restaurant::all();
+    }
+
+    public function getBookings(Restaurant $restaurant) {
+        return $restaurant->bookings;
+    }
+
+    public function addBooking(Request $request) {
+        $booking = new Booking($request->all());
+        $booking->save();
+        
+        return response()->json($booking, 201);
+    }
+```
+
+- *This way it returns objects in JSON which is what we need*
+
+
+## 10. Link Api routes to the controller
 1. Add import of the Restaurant Controller: `use App\Http\Controllers\RestaurantController;`
 
 2. Add 3 routes:
@@ -127,4 +154,4 @@
     Route::post("/bookings", [RestaurantController::class, "addBooking"]);
 ```
 
-# 11. And now is the best time to test the server-side using postman and fix the issues!
+## 11. And now is the best time to test the server-side using postman and fix the issues!
