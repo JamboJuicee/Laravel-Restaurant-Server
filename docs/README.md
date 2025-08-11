@@ -30,7 +30,7 @@
 1. `herd php artisan make:model Restaurant`
 2. `herd php artisan make:model Booking`
 
-- Make sure to add `use Illuminate\Database\Eloquent\HasUuids;` for both Models.
+- Make sure to add `use Illuminate\Database\Eloquent\Concerns\HasUuids;` for both Models.
 - Make sure to add `use Illuminate\Database\Eloquent\Factories\HasFactory;` for Restaurant model
 
 # 5. Add valid structure for models
@@ -51,4 +51,14 @@
     public function restaurant() {
         return $this -> belongsTo(Restaurant::class);
     }
+```
+
+# 6. Create Restaurant Factory & add valid structure for it
+1. `herd php artisan make:factory RestaurantFactory`
+
+- Add valid structure for the factory:
+```
+    "id" -> $this -> faker -> uuid(),
+    "name" -> $this -> faker -> company(),
+    "rating" -> $this -> faker -> numberBetween(0, 5)
 ```
