@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Booking extends Model
 {
-    use hasUuids;
+    use HasUuids;
 
     protected $fillable = ["name", "email", "datetime", "people", "restaurant_id"];
 
