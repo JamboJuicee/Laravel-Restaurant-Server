@@ -62,3 +62,26 @@
     "name" -> $this -> faker -> company(),
     "rating" -> $this -> faker -> numberBetween(0, 5)
 ```
+
+# 7. Creating seeder for Restaurant
+1. `herd php artisan make:seeder RestaurantSeeder`
+
+- Import Restaurant model to the seeder: `use App\Models\Restaurant;`
+
+- Add valid Restaurant seeder structure:
+```
+    public function run(): void
+    {
+        Restaurant::factory(10) -> create();
+    }
+```
+
+- Modify *DatabaseSeeder.php* by replacing the function *run()* with this:
+```
+    public function run(): void
+    {
+        $this -> call([
+            RestaurantSeeder::class
+        ]);
+    }
+```
